@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevMaster - Aprenda HTML, CSS e JS</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+  
+  body {
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: #fff;
+    min-height: 100vh;
+  }
+  
+  header {
+    text-align: center;
+    padding: 40px 20px 20px;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid rgba(255,255,255,0.1);
+  }
+  
+  header h1 {
+    font-size: 3rem;
+    background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #1dd1a1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  header p { margin-top: 10px; opacity: 0.8; font-size: 1.1rem; }
+  
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    background: rgba(15,12,41,0.95);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  
+  nav button {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+  }
+  
+  nav button:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+  nav button.active { background: linear-gradient(90deg, #ff6b6b, #feca57); color: #000; }
+  
+  main { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+  
+  .section { display: none; animation: fadeIn 0.5s; }
+  .section.active { display: block; }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    backdrop-filter: blur(10px);
+  }
+  
+  .card h2 {
+    color: #feca57;
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+    border-left: 4px solid #ff6b6b;
+    padding-left: 12px;
+  }
+  
+  .card h3 { color: #48dbfb; margin: 15px 0 8px; font-size: 1.2rem; }
+  
+  .card p { line-height: 1.7; margin-bottom: 10px; opacity: 0.9; }
+  
+  pre {
+    background: #1e1e2e;
+    border-radius: 10px;
+    padding: 18px;
+    overflow-x: auto;
+    margin: 12px 0;
+    border-left: 3px solid #48dbfb;
+    font-size: 0.95rem;
+  }
+  
+  code { font-family: 'Consolas', 'Monaco', monospace; color: #f8f8f2; }
+  
+  .tag { color: #ff79c6; }
+  .attr { color: #50fa7b; }
+  .val { color: #f1fa8c; }
+  .prop { color: #8be9fd; }
+  .sel { color: #ff79c6; }
+  .num { color: #bd93f9; }
+  .str { color: #f1fa8c; }
+  .kw { color: #ff79c6; }
+  .fn { color: #50fa7b; }
+  .com { color: #6272a4; font-style: italic; }
+  
+  .demo {
+    background: #fff;
+    color: #000;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+    border: 2px dashed #48dbfb;
+  }
+  
+  .demo.dark { background: #1e1e2e; color: #fff; }
+  
+  ul { padding-left: 25px; margin: 10px 0; }
+  li { margin: 5px 0; line-height: 1.6; }
+  
+  .grid-exemplo {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .grid-exemplo div {
+    background: linear-gradient(135deg, #ff6b6b, #feca57);
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    color: #000;
+    font-weight: bold;
+  }
+  
+  .btn-demo {
+    padding: 10px 20px;
+    background: linear-gradient(90deg, #ff6b6b, #feca57);
+    border: none;
+    border-radius: 20px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .btn-demo:hover { transform: scale(1.05); }
+  
+  .box-animado {
+    width: 80px; height: 80px;
+    background: linear-gradient(45deg, #ff6b6b, #48dbfb);
+    border-radius: 10px;
+    animation: girar 3s infinite;
+    margin: 10px 0;
+  }
+  @keyframes girar {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.2); }
+  }
+  
+  footer {
+    text-align: center;
+    padding: 30px;
+    opacity: 0.7;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: 40px;
+  }
+  
+  @media (max-width: 600px) {
+    header h1 { font-size: 2rem; }
+    .grid-exemplo { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚡ DevMaster</h1>
+  <p>Aprenda HTML, CSS e JavaScript de forma prática e divertida!</p>
+</header>
+
+<nav>
+  <button class="active" onclick="mostrar('html', this)">📄 HTML</button>
+  <button onclick="mostrar('css', this)">🎨 CSS</button>
+  <button onclick="mostrar('js', this)">⚙️ JavaScript</button>
+  <button onclick="mostrar('projetos', this)">🚀 Projetos</button>
+</nav>
+
+<main>
+
+<!-- ============ HTML ============ -->
+<section id="html" class="section active">
+  <div class="card">
+    <h2>🏗️ Estrutura Básica do HTML</h2>
+    <p>Todo documento HTML começa com esta estrutura. É o esqueleto da página!</p>
+<pre><code><span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="val">"pt-BR"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="val">"UTF-8"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="val">"viewport"</span> <span class="attr">content</span>=<span class="val">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Meu Site<span class="tag">&lt;/title&gt;</span>
+  <span class="tag">&lt;/head&gt;</span>
+  <span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;h1&gt;</span>Olá Mundo!<span class="tag">&lt;/h1&gt;</span>
+  <span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></code></pre>
+  </div>
+
+  <div class="card">
+    <h2>📝 Tags de Texto</h2>
+    <h3>Títulos (h1 até h6)</h3>
+<pre><code><span class="tag">&lt;h1&gt;</span>Título Principal<span class="tag">&lt;/h1&gt;</span>
+<span class="tag">&lt;h2&gt;</span>Subtítulo<span class="tag">&lt;/h2&gt;</span>
+<span class="tag">&lt;p&gt;</span>Parágrafo normal<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;strong&gt;</span>Negrito<span class="tag">&lt;/strong&gt;</span>
+<span class="tag">&lt;em&gt;</span>Itálico<span class="tag">&lt;/em&gt;</span>
+<span class="tag">&lt;br&gt;</span> <span class="com">&lt;!-- quebra de linha --&gt;</span>
+<span class="tag">&lt;hr&gt;</span> <span class="com">&lt;!-- linha horizontal --&gt;</span></code></pre>
+  </div>
+
+  <div class="card">
+    <h2>🔗 Links e Imagens</h2>
+<pre><code><span class="com">&lt;!-- Link --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://google.com"</span> <span class="attr">target</span>=<span class="val">"_blank"</span><span class="tag">&gt;</span>Clique aqui<span class="tag">&lt;/a&gt;</span>
+
+<span class="com">&lt;!-- Imagem --&gt;</span>
+<span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"foto.jpg"</span> <span class="attr">alt</span>=<span class="val">"Descrição"</span> <span class="attr">width</span>=<span class="val">"300"</span><span class="tag">&gt;</span></code></pre>
+  </div>
+
+  <div class="card">
+    <h2>📋 Listas</h2>
+<pre><code><span class="com">&lt;!-- Lista não ordenada --&gt;</span>
+<span class="tag">&lt;ul&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Maçã<span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Banana<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ul&gt;</span>
+
+<span class="com">&lt;!-- Lista ordenada --&gt;</span>
+<span class="tag">&lt;ol&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Primeiro<span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Segundo<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ol&gt;</span></code></pre>
+  </div>
+
+  <div class="card">
+    <h2>🏛️ Tags Semânticas (MUITO importante!)</h2>
+    <p>Deixam o código mais organizado e ajudam o Google e leitores de tela:</p>
+<pre><code><span class="tag">&lt;header&gt;</span>Cabeçalho do site<span class="tag">&lt;/header&gt;</span>
+<span class="tag">&lt;nav&gt;</span>Menu de navegação<span class="tag">&lt;/nav&gt;</span>
+<span class="tag">&lt;main&gt;</span>Conteúdo principal<span class="tag">&lt;/main&gt;</span>
+<span class="tag">&lt;section&gt;</span>Seção de conteúdo<span class="tag">&lt;/section&gt;</span>
+<span class="tag">&lt;article&gt;</span>Artigo independente<span class="tag">&lt;/article&gt;</span>
+<span class="tag">&lt;aside&gt;</span>Conteúdo lateral<span class="tag">&lt;/aside&gt;</span>
+<span class="tag">&lt;footer&gt;</span>Rodapé<span class="tag">&lt;/footer&gt;</span></code></pre>
+  </div>
+
+  <div class="card">
+    <h2>📝 Formulários</h2>
+<pre><code><span class="tag">&lt;form</span> <span class="attr">action</span>=<span class="val">"/enviar"</span> <span class="attr">method</span>=<span class="val">"POST"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="val">"nome"</span><span class="tag">&gt;</span>Nome:<span class="tag">&lt;/label&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"text"</span> <span class="attr">id</span>=<span class="val">"nome"</span> <span class="attr">required</span><span class="tag">&gt;</span>
+
+  <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="val">"email"</span><span class="tag">&gt;</span>Email:<span class="tag">&lt;/label&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"email"</span> <span class="attr">id</span>=<span class="val">"email"</span><span class="tag">&gt;</span>
+
+  <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="val">"senha"</span><span class="tag">&gt;</span>Senha:<span class="tag">&lt;/label&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"password"</span> <span class="attr">id</span>=<span class="val">"senha"</span><span class="tag">&gt;</span>
+
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"number"</span> <span class="attr">min</span>=<span class="val">"0"</span> <span class="attr">max</span>=<span class="val">"100"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"date"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"color"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"range"</span><span class="tag">&gt;</span>
+
+  <span class="tag">&lt;textarea</span> <span class="attr">rows</span>=<span class="val">"4"</span><span class="tag">&gt;&lt;/textarea&gt;</span>
+
+  <span class="tag">&lt;select&gt;</span>
+    <span class="tag">&lt;option&gt;</span>Opção 1<span class="tag">&lt;/option&gt;</span>
+    <span class="tag">&lt;option&gt;</span>Opção 2<span class="tag">&lt;/option&gt;</span>
+  <span class="tag">&lt;/select&gt;</span>
+
+  <span class="tag">&lt;button</span> <span class="attr">type</span>=<span class="val">"submit"</span><span class="tag">&gt;</span>Enviar<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/form&gt;</span></code></pre>
+  </div>
+
+  <div class="card">
+    <h2>🎬 Mídia</h2>
+<pre><code><span class="com">&lt;!-- Vídeo --&gt;</span>
+<span class="tag">&lt;video</span> <span class="attr">src</span>=<span class="val">"video.mp4"</span> <span class="attr">controls</span> <span class="attr">autoplay</span><span class="tag">&gt;&lt;/video&gt;</span>
+
+<span class="com">&lt;!-- Áudio --&gt;</span>
+<span class="tag">&lt;audio</span> <span class="attr">src</span>=<span class="val">"musica.mp3"</span> <span class="attr">controls</span><span class="tag">&gt;&lt;/audio&gt;</span>
+
+<span class="com">&lt;!-- Iframe (YouTube, por exemplo) --&gt;</span>
+<span class="tag">&lt;iframe</span> <span class="attr">src</span>=<span class="val">"https://youtube.com/embed/ID"</span><span class="tag">&gt;&lt;/iframe&gt;</span></code></pre>
+  </div>
+
+  <div class="card">
+    <h2>📊 Tabelas</h2>
+<pre><code><span class="tag">&lt;table&gt;</span>
+  <span class="tag">&lt;thead&gt;</span>
+    <span class="tag">&lt;tr&gt;</span>
+      <span class="tag">&lt;th&gt;</span>Nome<span class="tag">&lt;/th&gt;</span>
+      <span class="tag">&lt;th&gt;</span>Idade<span class="tag">&lt;/th&gt;</span>
+    <span class="tag">&lt;/tr&gt;</span>
+  <span class="tag">&lt;/thead&gt;</span>
+  <span class="tag">&lt;tbody&gt;</span>
+    <span class="tag">&lt;tr&gt;</span>
+      <span class="tag">&lt;td&gt;</span>Ana<span class="tag">&lt;/td&gt;</span>
+      <span class="tag">&lt;td&gt;</span>25<span class="tag">&lt;/td&gt;</span>
+    <span class="tag">&lt;/tr&gt;</span>
+  <span class="tag">&lt;/tbody&gt;</span>
+<span class="tag">&lt;/table&gt;</span></code></pre>
+  </div>
+</section>
+
+<!-- ============ CSS ============ -->
+<section id="css" class="section">
+  <div class="card">
+    <h2>🎨 O que é CSS?</h2>
+    <p>CSS (Cascading Style Sheets) é o que deixa seu site bonito! Ele controla cores, tamanhos, posições e animações.</p>
+<pre><code><span class="com">/* Sintaxe básica */</span>
+<span class="sel">seletor</span> {
+  <span class="prop">propriedade</span>: <span class="val">valor</span>;
+}</code></pre>
+  </div>
+
+  <div class="card">
+    <h2>🎯 Seletores</h2>
+<pre><code><span class="com">/* Por tag */</span>
+<span class="sel">p</span> { <span class="prop">color</span>: <span class="val">blue</span>; }
+
+<span class="com">/* Por classe (.) */</span>
+<span class="sel">.destaque</span> { <span class="prop">background</span>: <span class="val">yellow</span>; }
+
+<span class="com">/* Por ID (#) */</span>
+<span class="sel">#titulo</span> { <span class="prop">font-size</span>: <span class="num">30px</span>; }
+
+<span class="com">/* Combinados */</span>
+<span class="sel">div p</span> { }        <span class="com">/* p dentro de div */</span>
+<span class="sel">h1, h2</span> { }       <span class="com">/* h1 OU h2 */</span>
+<span class="sel">a:hover</span> { }      <span class="com">/* ao passar o mouse */</span>
+<span class="sel">input:focus</span> { }  <span class="com">/* quando clicado */</span>
+<span class="sel">li:first-child</span> { } <span class="com">/* primeiro filho */</span></code></pre>
+  </div>
+
+  <div class="card">
+    <h2>📦 Box Model</h2>
+    <p>Tudo em CSS é uma "caixa" com: conteúdo, padding, borda e margem.</p>
+<pre><code><span class="sel">.caixa</span> {
+  <span class="prop">width</span>: <span class="num">200px</span>;          <span class="com">/* largura */</span>
+  <span class="prop">height</span>: <span class="num">100px</span>;         <span class="com">/* altura */</span>
+  <span class="prop">padding</span>: <span class="num">20px</span>;         <span class="com">/* espaço interno */</span>
+  <span class="prop">border</span>: <span class="num">2px</span> <span class="val">solid</span> <span class="val">black</span>; <span class="com">/* borda */</span>
+  <span class="prop">margin</span>: <span class="num">10px</span>;          <span class="com">/* espaço externo */</span>
+}</code></pre>
+  </div>
+
+  <div class="card">
+    <h2>🌈 Cores e Fundos</h2>
+<pre><code><span class="sel">.exemplo</span> {
+  <span class="prop">color</span>: <span class="val">red</span>;                    <span class="com">/* cor do texto */</span>
+  <span class="prop">color</span>: <span class="val">#ff6b6b</span>;                <span class="com">/* hexadecimal */</span>
+  <span class="prop">color</span>: <span class="fn">rgb</span>(<span class="num">255</span>, <span class="num">107</span>, <span class="num">107</span>);      <span class="com">/* RGB */</span>
+  <span class="prop">color</span>: <span class="fn">rgba</span>(<span class="num">255</span>, <span class="num">107</span>, <span class="num">107</span>, <span class="num">0.5</span>); <span class="com">/* com transparência */</span>
+  
+  <span class="prop">background</span>: <span class="val">blue</span>;
+  <span class="prop">background</span>: <span class="fn">linear-gradient</span>(<span class="num">90deg</span>, <span class="val">red</span>, <span class="val">yellow</span>);
+  <span class="prop">background</span>: <span class="fn">radial-gradient</span>(<span class="val">circle</span>, <span class="val">blue</span>, <span class="val">black</span>);
+  <span class="prop">background-image</span>: <span class="fn">url</span>(<span class="str">'foto.jpg'</span>);
+}</code></pre>
+  </div>
+
+  <div class="card">
+    <h2>💪 Flexbox (Layout moderno!)</h2>
+    <p>Flexbox organiza itens em linha ou coluna de forma flexível.</p>
+<pre><code><span class="sel">.container</span> {
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">justify-content</span>: <span class="val">center</span>;   <span class="com">/* eixo horizontal */</span>
+  <span class="prop">align-items</span>: <span class="val">center</span>;       <span class="com">/* eixo vertical */</span>
+  <span class="prop">flex-direction</span>: <span class="val">row</span>;       <span class="com">/* row | column */</span>
+  <span class="prop">gap</span>: <span class="num">20px</span>;                 <span class="com">/* espaço entre itens */</span>
+  <span class="prop">flex-wrap</span>: <span class="val">wrap</span>;           <span class="com">/* quebra linha */</span>
+}
+
+<span class="sel">.item</span> {
+  <span class="prop">flex</span>: <span class="num">1</span>;                   <span class="com">/* ocupa espaço igual */</span>
+}</code></pre>
+    <div class="demo">
+      <div style="display:flex; justify-content:space-around; align-items:center; background:linear-gradient(90deg,#ff6b6b,#48dbfb); padding:20px; border-radius:8px;">
+        <div style="background:#fff; padding:15px; border-radius:8px; color:#000; font-weight:bold;">1</div>
+        <div style="background:#fff; padding:15px; border-radius:8px; color:#000; font-weight:bold;">2</div>
+        <div style="background:#fff; padding:15px; border-radius:8px; color:#000; font-weight:bold;">3</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🔲 CSS Grid</h2>
+    <p>Grid cria layouts em grade (linhas e colunas).</p>
+<pre><code><span class="sel">.grid</span> {
+  <span class="prop">display</span>: <span class="val">grid</span>;
+  <span class="prop">grid-template-columns</span>: <span class="fn">repeat</span>(<span class="num">3</span>, <span class="num">1fr</span>); <span class="com">/* 3 colunas iguais */</span>
+  <span class="prop">gap</span>: <span class="num">10px</span>;
+}</code></pre>
+    <div class="demo">
+      <div class="grid-exemplo">
+        <div>1</div><div>2</div><div>3</div>
+        <div>4</div><div>5</div><div>6</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>✨ Animações e Transições</h2>
+<pre><code><span class="com">/* Transição suave */</span>
+<span class="sel">.botao</span> {
+  <span class="prop">transition</span>: <span class="val">all</span> <span class="num">0.3s</span> <span class="val">ease</span>;
+}
+<span class="sel">.botao:hover</span> {
+  <span class="prop">transform</span>: <span class="fn">scale</span>(<span class="num">1.1</span>);
+}
+
+<span class="com">/* Animação */</span>
+<span class="sel">@keyframes</span> <span class="fn">girar</span> {
+  <span class="sel">from</span> { <span class="prop">transform</span>: <span class="fn">rotate</span>(<span class="num">0deg</span>); }
+  <span class="sel">to</span> { <span class="prop">transform</span>: <span class="fn">rotate</span>(<span class="num">360deg</span>); }
+}
+<span class="sel">.elemento</span> {
+  <span class="prop">animation</span>: <span class="val">girar</span> <span class="num">2s</span> <span class="val">infinite</span>;
+}</code></pre>
+    <div class="demo">
+      <div class="box-animado"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📱 Responsividade (@media)</h2>
+    <p>Adapta o site para celular, tablet e desktop!</p>
+<pre><code><span class="com">/* Tela menor que 768px (celular) */</span>
+<span class="sel">@media</span> (<span class="prop">max-width</span>: <span class="num">768px</span>) {
+  <span class="sel">.container</span> {
+    <span class="prop">flex-direction</span>: <span class="val">column</span>;
+  }
+}
+
+<span class="com">/* Tela maior que 1024px (desktop) */</span>
+<span class="sel">@media</span> (<span class="prop">min-width</span>: <span class="num">1024px</span>) {
+  <span class="sel">.container</span> {
+    <span class="prop">max-width</span>: <span class="num">1200px</span>;
+  }
+}</code></pre>
+  </div>
+
+  <div class="card">
+    <h2>🎭 Variáveis CSS</h2>
+<pre><code><span class="sel">:root</span> {
+  <span class="prop">--cor-principal</span>: <span class="val">#ff6b6b</span>;
+  <span class="prop">--cor-secundaria</span>: <span class="val">#48dbfb</span>;
+  <span class="prop">--tamanho-fonte</span>: <span class="num">16px</span>;
+}
+
+<span class="sel">.botao</span> {
+  <span class="prop">background</span>: <span class="fn">var</span>(<span class="val">--cor-principal</span>);
+  <span class="prop">font-size</span>: <span class="fn">var</span>(<span class="val">--tamanho-fonte</span>);
+}</code></pre>
+  </div>
+
+  <div class="card">
+    <h2>🌟 Efeitos Legais</h2>
+<pre><code><span class="sel">.vidro</span> {
+  <span class="prop">backdrop-filter</span>: <span class="fn">blur</span>(<span class="num">10px</span>);
+  <span class="prop">background</span>: <span class="fn">rgba</span>(<span class="num">255</span>,<span class="num">255</span>,<span class="num">255</span>,<span class="num">0.1</span>);
+}
+
+<span class="sel">.sombra</span> {
+  <span class="prop">box-shadow</span>: <span class="num">0 10px 30px</span> <span class="fn">rgba</span>(<span class="num">0</span>,<span class="num">0</span>,<span class="num">0</span>,<span class="num">0.3</span>);
+  <span class="prop">text-shadow</span>: <span class="num">2px 2px 4px</span> <span class="val">black</span>;
+}
+
+<span class="sel">.arredondado</span> {
+  <span class="prop">border-radius</span>: <span class="num">50%</span>;  <span class="com">/* círculo */</span>
+  <span class="prop">border-radius</span>: <span class="num">20px</span>; <span class="com">/* cantos arredondados */</span>
+}</code></pre>
+  </div>
+</section>
+
+<!-- ============ JS ============ -->
+<section id="js" class="section">
+  <div class="card">
+    <h2>⚙️ O que é JavaScript?</h2>
+    <p>JavaScript dá vida ao site! Ele faz as coisas acontecerem: cliques, animações, cálculos, etc.</p>
+<pre><code><span class="com">// Exibir mensagem</span>
+<span class="fn">alert</span>(<span class="str">"Olá, mundo!"</span>);
+<span class="fn">console.log</span>(<span class="str">"Aparece no console"</span>);</code></pre>
+  </div>
+
+  <div class="card">
+    <h2>📦 Variáveis</h2>
+<pre><code><span class="kw">let</span> nome = <span class="str">"Ana"</span>;       <span class="com">// pode mudar</span>
+<span class="kw">const</span> idade = <span class="num">25</span>;       <span class="com">// constante, não muda</span>
+<span class="kw">var</span> antigo = <span class="str">"evite"</span>;   <span class="com">// antigo, prefira let/const</span>
+
+<span class="com">// Tipos de dados</span>
+<span class="kw">let</span> texto = <span class="str">"Olá"</span>;        <span class="com">// string</span>
+<span class="kw">let</span> numero = <span class="num">42</span>;          <span class="com">// number</span>
+<span class="kw">let</span> decimal = <span class="num">3.14</span>;       <span class="com">// number</span>
+<span class="kw">let</span> ativo = <span class="kw">true</span>;         <span class="com">// boolean</span>
+<span class="kw">let</span> vazio = <span class="kw">null</span>;         <span class="com">// nulo</span>
+<span class="kw">let</span> indefinido;             <span class="com">// undefined</span></code></pre>
+  </div>
+
+  <div class="card">
+    <h2>📝 Template Literals</h2>
+    <p>Use crases (`) para misturar texto e variáveis facilmente!</p>
+<pre><code><span class="kw">let</span> nome = <span class="str">"João"</span>;
+<span class="kw">let</span> idade = <span class="num">20</span>;
+
+<span class="com">// Jeito antigo</span>
+<span class="fn">console.log</span>(<span class="str">"Olá, "</span> + nome + <span class="str">", você tem "</span> + idade);
+
+<span class="com">// Jeito moderno (template literal)</span>
+<span class="fn">console.log</span>(<span class="str">`Olá, ${nome}, você tem ${idade} anos!`</span>);</code></pre>
+  </div>
+
+  <div class="card">
+    <h2>🔧 Funções</h2>
+<pre><code><span class="com">// Função tradicional</span>
+<span class="kw">function</span> <span class="fn">saudar</span>(nome) {
+  <span class="kw">return</span> <span class="str">`Olá, ${nome}!`</span>;
+}
+
+<span class="com">// Arrow function (moderna!)</span>
+<span class="kw">const</span> <span class="fn">saudar2</span> = (nome) => <span class="str">`Olá, ${nome}!`</span>;
+
+<span class="com">// Função com valor padrão</span>
+<span class="kw">const</span> <span class="fn">somar</span> = (a, b = <span class="num">0</span>) => a + b;
+
+<span class="fn">console.log</span>(<span class="fn">saudar</span>(<span class="str">"Maria"</span>));  <span class="com">// Olá, Maria!</span>
+<span class="fn">console.log</span>(<span class="fn">somar</span>(<span class="num">5</span>, <span class="num">3</span>));      <span class="com">// 8</span></code></pre>
+  </div>
+
+  <div class="card">
+    <h2>📋 Arrays (Listas)</h2>
+<pre><code><span class="kw">const</span> frutas = [<span class="str">"maçã"</span>, <span class="str">"banana"</span>, <span class="str">"uva"</span>];
+
+<span class="fn">console.log</span>(frutas[<span class="num">0</span>]);       <span class="com">// maçã</span>
+<span class="fn">console.log</span>(frutas.<span class="prop">length</span>);   <span class="com">// 3</span>
+
+frutas.<span class="fn">push</span>(<span class="str">"laranja"</span>);      <span class="com">// adiciona no final</span>
+frutas.<span class="fn">pop</span>();                <span class="com">// remove o último</span>
+
+<span class="com">// Métodos PODEROSOS!</span>
+<span class="kw">const</span> numeros = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>, <span class="num">5</span>];
+
+<span class="com">// map: transforma cada item</span>
+<span class="kw">const</span> dobro = numeros.<span class="fn">map</span>(n => n * <span class="num">2</span>);
+<span class="com">// [2, 4, 6, 8, 10]</span>
+
+<span class="com">// filter: filtra itens</span>
+<span class="kw">const</span> pares = numeros.<span class="fn">filter</span>(n => n % <span class="num">2</span> === <span class="num">0</span>);
+<span class="com">// [2, 4]</span>
+
+<span class="com">// reduce: reduz a um valor</span>
+<span class="kw">const</span> soma = numeros.<span class="fn">reduce</span>((acc, n) => acc + n, <span class="num">0</span>);
+<span class="com">// 15</span>
+
+<span class="com">// find: encontra o primeiro</span>
+<span class="kw">const</span> maior3 = numeros.<span class="fn">find</span>(n => n > <span class="num">3</span>);
+<span class="com">// 4</span></code></pre>
+  </div>
+
+  <div class="card">
+    <h2>🗂️ Objetos</h2>
+<pre><code><span class="kw">const</span> pessoa = {
+  nome: <span class="str">"Ana"</span>,
+  idade: <span class="num">25</span>,
+  cidade: <span class="str">"SP"</span>,
+  <span class="fn">saudar</span>() {
+    <span class="kw">return</span> <span class="str">`Oi, sou ${<span class="kw">this</span>.nome}!`</span>;
+  }
+};
+
+<span class="fn">console.log</span>(pessoa.nome);       <span class="com">// Ana</span>
+<span class="fn">console.log</span>(pessoa[<span class="str">"idade"</span>]);   <span class="com">// 25</span>
+<span class="fn">console.log</span>(pessoa.<span class="fn">saudar</span>());   <span class="com">// Oi, sou Ana!</span>
+
+<span class="com">// Destructuring (desestruturar)</span>
+<span class="kw">const</span> { nome, idade } = pessoa;
+<span class="fn">console.log</span>(nome);  <span class="com">// Ana</span></code></pre>
+  </div>
+
+  <div class="card">
+    <h2>🔀 Condicionais e Loops</h2>
+<pre><code><span class="com">// if / else</span>
+<span class="kw">const</span> idade = <span class="num">18</span>;
+<span class="kw">if</span> (idade >= <span class="num">18</span>) {
+  <span class="fn">console.log</span>(<span class="str">"Maior de idade"</span>);
+} <span class="kw">else</span> {
+  <span class="fn">console.log</span>(<span class="str">"Menor"</span>);
+}
+
+<span class="com">// Operador ternário (if curto)</span>
+<span class="kw">const</span> status = idade >= <span class="num">18</span> ? <span class="str">"adulto"</span> : <span class="str">"jovem"</span>;
+
+<span class="com">// for loop</span>
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i < <span class="num">5</span>; i++) {
+  <span class="fn">console.log</span>(i);
+}
+
+<span class="com">// for...of (para arrays)</span>
+<span class="kw">const</span> frutas = [<span class="str">"maçã"</span>, <span class="str">"banana"</span>];
+<span class="kw">for</span> (<span class="kw">const</span> fruta <span class="kw">of</span> frutas) {
+  <span class="fn">console.log</span>(fruta);
+}</code></pre>
+  </div>
+
+  <div class="card">
+    <h2>🎯 DOM (Manipular a página!)</h2>
+    <p>O DOM é a árvore de elementos HTML. Com JS você pode mudar tudo!</p>
+<pre><code><span class="com">// Selecionar elementos</span>
+<span class="kw">const</span> titulo = <span class="fn">document.getElementById</span>(<span class="str">"titulo"</span>);
+<span class="kw">const</span> btn = <span class="fn">document.querySelector</span>(<span class="str">".botao"</span>);
+<span class="kw">const</span> itens = <span class="fn">document.querySelectorAll</span>(<span class="str">"li"</span>);
+
+<span class="com">// Mudar conteúdo</span>
+titulo.<span class="prop">textContent</span> = <span class="str">"Novo título"</span>;
+titulo.<span class="prop">innerHTML</span> = <span class="str">"&lt;em&gt;Com&lt;/em&gt; HTML"</span>;
+
+<span class="com">// Mudar estilo</span>
+titulo.<span class="prop">style</span>.<span class="prop">color</span> = <span class="str">"red"</span>;
+titulo.<span class="prop">style</span>.<span class="prop">fontSize</span> = <span class="str">"30px"</span>;
+
+<span class="com">// Mudar classe</span>
+titulo.<span class="prop">classList.add</span>(<span class="str">"ativo"</span>);
+titulo.<span class="prop">classList.remove</span>(<span class="str">"escondido"</span>);
+titulo.<span class="prop">classList.toggle</span>(<span class="str">"ativo"</span>);
+
+<span class="com">// Criar elemento</span>
+<span class="kw">const</span> novo = <span class="fn">document.createElement</span>(<span class="str">"p"</span>);
+novo.<span class="prop">textContent</span> = <span class="str">"Novo parágrafo"</span>;
+<span class="fn">document.body.appendChild</span>(novo);</code></pre>
+  </div>
+
+  <div class="card">
+    <h2>🖱️ Eventos</h2>
+<pre><code><span class="kw">const</span> botao = <span class="fn">document.querySelector</span>(<span class="str">"button"</span>);
+
+<span class="com">// Ao clicar</span>
+botao.<span class="fn">addEventListener</span>(<span class="str">"click"</span>, () => {
+  <span class="fn">alert</span>(<span class="str">"Clicou!"</span>);
+});
+
+<span class="com">// Outros eventos comuns:</span>
+<span class="com">// "mouseover", "mouseout"</span>
+<span class="com">// "keydown", "keyup"</span>
+<span class="com">// "submit", "change", "input"</span>
+<span class="com">// "scroll", "resize", "load"</span></code></pre>
+    <div class="demo">
+      <button class="btn-demo" onclick="alert('Você clicou! 🎉')">Clique aqui!</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>💾 LocalStorage (Salvar dados)</h2>
+    <p>Salve dados no navegador do usuário (persiste mesmo fechando a página).</p>
+<pre><code><span class="com">// Salvar</span>
+localStorage.<span class="fn">setItem</span>(<span class="str">"nome"</span>, <span class="str">"Ana"</span>);
+localStorage.<span class="fn">setItem</span>(<span class="str">"usuario"</span>, JSON.<span class="fn">stringify</span>({nome: <span class="str">"Ana"</span>, idade: <span class="num">25</span>}));
+
+<span class="com">// Ler</span>
+<span class="kw">const</span> nome = localStorage.<span class="fn">getItem</span>(<span class="str">"nome"</span>);
+<span class="kw">const</span> user = JSON.<span class="fn">parse</span>(localStorage.<span class="fn">getItem</span>(<span class="str">"usuario"</span>));
+
+<span class="com">// Remover</span>
+localStorage.<span class="fn">removeItem</span>(<span class="str">"nome"</span>);
+localStorage.<span class="fn">clear</span>();  <span class="com">// limpa tudo</span></code></pre>
+  </div>
+
+  <div class="card">
+    <h2>🌐 Fetch API (Buscar dados da internet)</h2>
+<pre><code><span class="com">// Buscar dados de uma API</span>
+<span class="kw">async function</span> <span class="fn">buscarUsuarios</span>() {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> resposta = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">"https://api.example.com/users"</span>);
+    <span class="kw">const</span> dados = <span class="kw">await</span> resposta.<span class="fn">json</span>();
+    <span class="fn">console.log</span>(dados);
+  } <span class="kw">catch</span> (erro) {
+    <span class="fn">console.error</span>(<span class="str">"Erro:"</span>, erro);
+  }
+}
+
+<span class="fn">buscarUsuarios</span>();</code></pre>
+  </div>
+</section>
+
+<!-- ============ PROJETOS ============ -->
+<section id="projetos" class="section">
+  <div class="card">
+    <h2>🚀 Projeto 1: Contador</h2>
+<pre><code><span class="tag">&lt;h1</span> <span class="attr">id</span>=<span class="val">"contador"</span><span class="tag">&gt;</span>0<span class="tag">&lt;/h1&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">onclick</span>=<span class="val">"mudar(1)"</span><span class="tag">&gt;</span>+<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">onclick</span>=<span class="val">"mudar(-1)"</span><span class="tag">&gt;</span>-<span class="tag">&lt;/button&gt;</span>
+
+<span class="tag">&lt;script&gt;</span>
+  <span class="kw">let</span> valor = <span class="num">0</span>;
+  <span class="kw">function</span> <span class="fn">mudar</span>(n) {
+    valor += n;
+    <span class="fn">document.getElementById</span>(<span class="str">"contador"</span>).<span class="prop">textContent</span> = valor;
+  }
+<span class="tag">&lt;/script&gt;</span></code></pre>
+  </div>
+
+  <div class="card">
+    <h2>🚀 Projeto 2: Lista de Tarefas</h2>
+<pre><code><span class="tag">&lt;input</span> <span class="attr">id</span>=<span class="val">"tarefa"</span> <span class="attr">placeholder</span>=<span class="val">"Nova tarefa"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">onclick</span>=<span class="val">"adicionar()"</span><span class="tag">&gt;</span>Adicionar<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;ul</span> <span class="attr">id</span>=<span class="val">"lista"</span><span class="tag">&gt;&lt;/ul&gt;</span>
+
+<span class="tag">&lt;script&gt;</span>
+  <span class="kw">function</span> <span class="fn">adicionar</span>() {
+    <span class="kw">const</span> input = <span class="fn">document.getElementById</span>(<span class="str">"tarefa"</span>);
+    <span class="kw">const</span> lista = <span class="fn">document.getElementById</span>(<span class="str">"lista"</span>);
+    <span class="kw">if</span> (input.value) {
+      <span class="kw">const</span> li = <span class="fn">document.createElement</span>(<span class="str">"li"</span>);
+      li.<span class="prop">textContent</span> = input.value;
+      li.<span class="fn">onclick</span> = () => li.<span class="fn">remove</span>();
+      lista.<span class="fn">appendChild</span>(li);
+      input.value = <span class="str">""</span>;
+    }
+  }
+<span class="tag">&lt;/script&gt;</span></code></pre>
+  </div>
+
+  <div class="card">
+    <h2>🚀 Projeto 3: Trocar Tema (Dark/Light)</h2>
+<pre><code><span class="tag">&lt;button</span> <span class="attr">onclick</span>=<span class="val">"trocarTema()"</span><span class="tag">&gt;</span>🌓 Tema<span class="tag">&lt;/button&gt;</span>
+
+<span class="tag">&lt;script&gt;</span>
+  <span class="kw">function</span> <span class="fn">trocarTema</span>() {
+    <span class="fn">document.body</span>.<span class="prop">classList.toggle</span>(<span class="str">"dark"</span>);
+  }
+<span class="tag">&lt;/script&gt;</span>
+
+<span class="tag">&lt;style&gt;</span>
+  <span class="sel">body</span> { <span class="prop">background</span>: <span class="val">white</span>; <span class="prop">color</span>: <span class="val">black</span>; }
+  <span class="sel">body.dark</span> { <span class="prop">background</span>: <span class="val">black</span>; <span class="prop">color</span>: <span class="val">white</span>; }
+<span class="tag">&lt;/style&gt;</span></code></pre>
+  </div>
+
+  <div class="card">
+    <h2>💡 Dicas Finais</h2>
+    <ul>
+      <li>✅ Pratique todos os dias, mesmo que só 30 minutos</li>
+      <li>✅ Use o <strong>console do navegador</strong> (F12) para testar JS</li>
+      <li>✅ Consulte a <strong>MDN Web Docs</strong> (documentação oficial)</li>
+      <li>✅ Crie projetos pessoais — é a melhor forma de aprender</li>
+      <li>✅ Use <strong>Git e GitHub</strong> para salvar seu código</li>
+      <li>✅ Valide seu HTML em <strong>validator.w3.org</strong></li>
+      <li>✅ Nunca desista! Todo dev começou do zero 💪</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>💻 Feito com ❤️ para futuros devs | DevMaster 2026</p>
+</footer>
+
+<script>
+  function mostrar(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+</script>
+
+</body>
+</html>
